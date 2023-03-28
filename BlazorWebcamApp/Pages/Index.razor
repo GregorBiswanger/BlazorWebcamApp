@@ -1,0 +1,11 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Index</PageTitle>
+
+<h1>Webcam via .NET (OpenCvSharp)</h1>
+
+<canvas id="webcamCanvas" width="640" height="480"></canvas>
+
+<button @onclick="StartWebcam">Start Webcam</button>
+<button @onclick="StopWebcam">Stop Webcam</button>

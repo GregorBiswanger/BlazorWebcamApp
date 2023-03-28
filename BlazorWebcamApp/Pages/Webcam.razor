@@ -1,0 +1,41 @@
+﻿@page "/webcam"
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Webcam Sample</PageTitle>
+
+<h1>Webcam via native HTML5</h1>
+
+<canvas id="webcamCanvas" width="640" height="480"></canvas>
+
+<button @onclick="StartWebcam">Start Webcam</button>
+<button @onclick="StopWebcam">Stop Webcam</button>
+
+@code {
+    private DotNetObjectReference<Webcam> _objectReference;
+
+    protected override void OnInitialized()
+    {
+        _objectReference = DotNetObjectReference.Create(this);
+    }
+
+    private async Task StartWebcam()
+    {
+        await JSRuntime.InvokeVoidAsync("webcamFunctions.startWebcam", "webcamCanvas", _objectReference);
+    }
+
+    private async Task StopWebcam()
+    {
+        await JSRuntime.InvokeVoidAsync("webcamFunctions.stopWebcam");
+    }
+
+    [JSInvokable]
+    public async Task ProcessFrame(string imageDataUrl)
+    {
+        // Process the frame here, e.g. save or analyze.
+    }
+
+    public void Dispose()
+    {
+        _objectReference.Dispose();
+    }
+}
